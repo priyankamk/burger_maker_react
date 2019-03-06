@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      stack: ['bun', 'cheese', 'cheese', 'bun']
+      stack: ['bun', 'cheese', 'cheese']
     }
   }
 
@@ -33,22 +33,37 @@ class App extends Component {
     })
   }
 
+  removeIngredient = (event) => {
+    console.log(event.target.id); // the one to remove
+
+    //setState - which one?
+    this.setState({
+      stack: this.state.stack.filter(function (elem, index) {
+        // console.log(index);
+        return index !== Number(event.target.id)
+      })
+    })
+  }
+
 
   render() {
     return (
-      <div className="App">
+      <div className="App" >
         <aside>
           <button onClick={this.addBun}>Bun</button>
           <button onClick={this.addCheese}>Cheese</button>
         </aside>
 
         <main>
-
-          {this.state.stack.map(ingredient => {
-            return <div>{ingredient}</div>
+          {this.state.stack.map((ingredient, index) => {
+            return <div
+              key={index}
+              id={index}
+              onClick={this.removeIngredient}
+              className={ingredient}>
+              {ingredient}
+            </div>
           })}
-
-
 
           {/* <div className="bun">bun</div>
           <div className="cheese">Cheese</div>
