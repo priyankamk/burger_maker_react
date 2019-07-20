@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import LikeButton from './LikeButton.js';
+// import LikeButton from './LikeButton.js';
+import { pluralize, prettyIngredient } from './lib'
+
+// var pluralize = lib.pluralize
 
 class App extends Component {
   constructor(props) {
     super(props)
+    // this.color = 'green';
+    // this.safety = 'weak';
     this.state = {
-      stack: ['bun', 'cheese', 'cheese']
+      stack: ['bun', 'cheese', 'cheese', 'tomato', 'lettuce']
     }
   }
 
@@ -33,43 +38,61 @@ class App extends Component {
     })
   }
 
-  removeIngredient = (event) => {
-    console.log(event.target.id); // the one to remove
+  addTomato = () => {
+    this.setState({
+      stack: [...this.state.stack, "tomato"]
+    })
+  }
 
+  addLettuce = () => {
+    this.setState({
+      stack: [...this.state.stack, "lettuce"]
+    })
+  }
+
+  removeIngredient = (id) => {
+    // which one to remove- ingredient
+    // console.log(event.target.id); // the one to remove
     //setState - which one?
     this.setState({
       stack: this.state.stack.filter(function (elem, index) {
         // console.log(index);
-        return index !== Number(event.target.id)
+        return index !== id
       })
     })
   }
 
-
   render() {
+
+    var { stack } = this.state
+
     return (
       <div className="App" >
         <aside>
           <button onClick={this.addBun}>Bun</button>
           <button onClick={this.addCheese}>Cheese</button>
+          <button onClick={this.addTomato}>Tomato</button>
+          <button onClick={this.addLettuce}>Lettuce</button>
         </aside>
 
         <main>
           {this.state.stack.map((ingredient, index) => {
             return <div
               key={index}
-              id={index}
-              onClick={this.removeIngredient}
+              // id={index}
+              onClick={() => this.removeIngredient(index)}
               className={ingredient}>
               {ingredient}
             </div>
           })}
-
           {/* <div className="bun">bun</div>
           <div className="cheese">Cheese</div>
           <div className="bun">bun</div> */}
         </main>
 
+        <footer>
+          {stack.length} {pluralize('layer', 'layers', stack.length)} {prettyIngredient(stack, 'cheese')}
+        </footer>
       </div>
     );
   }

@@ -13,3 +13,15 @@
   border-radius: 10px;
   height: 1rem;
 }
+
+.tomato {
+  background-color: tomato;
+  border-radius: 10px;
+  height: 1rem;
+}
+
+.lettuce {
+  background-color: rgb(94, 230, 26);
+  border-radius: 10px;
+  height: 1rem;
+}
